@@ -26,7 +26,7 @@ public class SlidingWindowRateLimiterApplication {
 				.GET("/api/ping", r -> ok()
 						.contentType(TEXT_PLAIN)
 						.body(BodyInserters.fromValue("PONG"))
-				).filter(new RateLimiterHandlerFilterFunction(redisTemplate)).build();
+				).filter(new SlideWindowRateLimiterHandlerFilterFunction(redisTemplate)).build();
 	}
 
 	@Bean

@@ -8,6 +8,7 @@ import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 import reactor.util.function.Tuple2;
+import reactor.util.function.Tuple3;
 
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
@@ -17,12 +18,12 @@ import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.TOO_MANY_REQUESTS;
 
-public class RateLimiterHandlerFilterFunction implements HandlerFilterFunction<ServerResponse, ServerResponse> {
+public class SlideWindowRateLimiterHandlerFilterFunction implements HandlerFilterFunction<ServerResponse, ServerResponse> {
 
     private static final Long MAX_REQUESTS_PER_MINUTE = 5L;
     private final ReactiveRedisTemplate<String, Long> redisTemplate;
 
-    public RateLimiterHandlerFilterFunction(ReactiveRedisTemplate<String, Long> redisTemplate) {
+    public SlideWindowRateLimiterHandlerFilterFunction(ReactiveRedisTemplate<String, Long> redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
 
@@ -58,6 +59,27 @@ public class RateLimiterHandlerFilterFunction implements HandlerFilterFunction<S
             });
         });
     }
+
+//    private Mono<List<ByteBuffer>> function(String key) {
+//
+//        return redisTemplate.createMono(connection -> {
+//            long currentTime = System.currentTimeMillis();
+//            long slidingWindowTime = 60000L;
+//
+//            ByteBuffer bbKey = ByteBuffer.wrap(key.getBytes());
+//
+//            Mono<Tuple3<Long, Long, Boolean>> zip = Mono.zip(
+//                    connection.zSetCommands().zRemRangeByScore(bbKey, Range.from(Range.Bound.inclusive(0.0))
+//                            .to(Range.Bound.inclusive(Double.parseDouble(String.valueOf(currentTime)) - Double.parseDouble(String.valueOf(slidingWindowTime))))),
+//                    connection.zSetCommands().zAdd(bbKey, Double.valueOf(String.valueOf(currentTime)), ByteBuffer.wrap(Long.toString(currentTime).getBytes())),
+//                    connection.keyCommands().expire(bbKey, Duration.ofMillis(currentTime + slidingWindowTime))
+//            );
+//            Mono<List<ByteBuffer>> requests = connection.zSetCommands()
+//                    .zRange(bbKey, Range.from(Range.Bound.inclusive(0L)).to(Range.Bound.inclusive(-1L))).collectList();
+//
+//            return zip.then(requests);
+//        });
+//    }
 
     private String requestAddress(Optional<InetSocketAddress> maybeAddress) {
         return maybeAddress.isPresent() ? maybeAddress.get().getHostName() : "";
