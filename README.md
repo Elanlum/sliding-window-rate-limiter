@@ -21,14 +21,18 @@ brew install redis
 
 Using redis-cli you will be able to access records of request pushed into Redis
 
-<code>
-zrange rate_limit_localhost 0 -1 WITHSCORES
-</code>
-
 If you use password like above for Redis in docker, before access contents you need to authorize:
 
-Enter to redis-cli:
+Enter to redis-cli
+
 <code>
 auth %mypass%
+
+redis-cli
 </code>
 
+Check all contents for a rate_limit key with scores
+
+<code>
+zrange rate_limit 0 -1 WITHSCORES
+</code>
