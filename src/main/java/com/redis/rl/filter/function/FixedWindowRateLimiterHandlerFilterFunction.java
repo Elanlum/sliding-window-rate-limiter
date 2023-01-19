@@ -1,4 +1,4 @@
-package com.redis.rl;
+package com.redis.rl.filter.function;
 
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.web.reactive.function.server.HandlerFilterFunction;
