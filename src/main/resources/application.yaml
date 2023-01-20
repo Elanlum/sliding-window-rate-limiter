@@ -2,5 +2,5 @@ rateLimit:
   maxRequestAmount: 5
   windowTimeMs: 60000
   includePaths:
-    -/rate-limit/ping
-    - /rate-limit/pong
+    /rate-limit/ping,
+    /rate-limit/pong
