@@ -1,6 +1,6 @@
-package com.redis.rl;
+package com.elanlum.rl;
 
-import com.redis.rl.filter.function.SlideWindowRateLimiterHandlerFilterFunction;
+import com.elanlum.rl.filter.function.SlideWindowRateLimiterHandlerFilterFunction;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;

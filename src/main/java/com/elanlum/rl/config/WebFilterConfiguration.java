@@ -1,6 +1,6 @@
-package com.redis.rl.config;
+package com.elanlum.rl.config;
 
-import com.redis.rl.filter.RateLimiterFilter;
+import com.elanlum.rl.filter.RateLimiterFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.ReactiveRedisConnectionFactory;

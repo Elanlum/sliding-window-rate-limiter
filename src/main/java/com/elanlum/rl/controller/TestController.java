@@ -1,4 +1,4 @@
-package com.redis.rl.controller;
+package com.elanlum.rl.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
